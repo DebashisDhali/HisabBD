@@ -35,7 +35,7 @@ body {
 
   /* Ultra-Premium Button */
   .btn-premium {
-    @apply relative overflow-hidden px-10 py-5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-[1.8rem] font-black uppercase tracking-[0.2em] transition-all shadow-[0_20px_40px_-15px_rgba(16, 185, 129, 0.4)] active:scale-95 flex items-center justify-center gap-3;
+    @apply relative overflow-hidden px-10 py-5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-[1.8rem] font-black uppercase tracking-[0.2em] transition-all shadow-xl hover:shadow-2xl active:scale-95 flex items-center justify-center gap-3;
   }
 
   .btn-premium::after {
