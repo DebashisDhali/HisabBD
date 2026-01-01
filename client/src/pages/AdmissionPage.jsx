@@ -181,7 +181,7 @@ const AdmissionPage = () => {
                                     <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.5em] mb-4 opacity-70">{t('আপনার অর্জিত জিপিএ মার্কস', 'GPA MERIT CONTRIBUTION')}</div>
                                     <div className="flex items-center justify-center gap-4">
                                         <Sparkles size={32} className="text-amber-400 text-glow-amber-400" />
-                                        <div className="text-7xl md:text-9xl font-black tracking-tighter result-text-neon-blue truncate" style={{ fontSize: 'clamp(4rem, 15vw, 9rem)', lineHeight: '1' }}>
+                                        <div className="text-7xl md:text-9xl font-black tracking-tighter text-white drop-shadow-2xl truncate" style={{ fontSize: 'clamp(4rem, 15vw, 9rem)', lineHeight: '1' }}>
                                             {result.finalGpaScore}
                                         </div>
                                     </div>
