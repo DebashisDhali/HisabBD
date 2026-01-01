@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import CalculatorLayout from '../components/CalculatorLayout';
 import { useLanguage } from '../context/LanguageContext';
 import { calculateDPS, calculateFDR, calculateEMI } from '../calculators/finance';
-import { Calculator, AlertTriangle, Banknote, Calendar, Percent, Car, Wallet, HelpCircle, CheckCircle2, RotateCcw, Fingerprint } from 'lucide-react';
+import { Calculator, AlertTriangle, Banknote, Calendar, Percent, Car, Wallet, HelpCircle, CheckCircle2, RotateCcw, Fingerprint, Target, Zap, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const FinancePage = ({ type }) => {
@@ -74,12 +74,19 @@ const FinancePage = ({ type }) => {
 
     const currentSeo = seoConfigs[type] || seoConfigs.dps;
 
+    const relatedCalculators = [
+        { name: t('যাকাত ক্যালকুলেটর', 'Zakat Hub'), path: '/zakat-calculator-bangladesh', icon: <Target size={14} /> },
+        { name: t('আয়কর ক্যালকুলেটর', 'Salary Tax'), path: '/salary-tax-calculator-bangladesh', icon: <Zap size={14} /> },
+        { name: t('স্বর্ণের দাম', 'Gold Price'), path: '/gold-price-calculator-bangladesh', icon: <Settings size={14} /> },
+    ];
+
     return (
         <CalculatorLayout
             title={currentSeo.title}
             description={currentSeo.desc}
             keywords={currentSeo.keywords}
             canonical={currentSeo.canonical}
+            relatedTools={relatedCalculators}
         >
             <div className="card-premium !p-0 overflow-hidden border-none shadow-none bg-transparent">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">

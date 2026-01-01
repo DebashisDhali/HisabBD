@@ -19,7 +19,9 @@ import {
     Weight,
     Scaling,
     Compass,
-    BookOpen // Added BookOpen as it's used in the file
+    BookOpen,
+    Zap,
+    Settings
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -52,12 +54,18 @@ const ZakatPage = () => {
     const seoDescription = t('ইসলামী শরীয়াহ সম্মত যাকাত ক্যালকুলেটর। আপনার নগদ টাকা, স্বর্ণ, ও ব্যবসায়িক সম্পদের সঠিক যাকাত নির্ণয় করুন। ১ মিনিটে আপনার যাকাত হিসাব করুন।', 'Calculate your Zakat accurately according to Shariah rules. The most trusted Zakat tool for Bangladesh with 2026 nisab rates. Easy 1-minute calculation.');
     const seoKeywords = t('যাকাত ক্যালকুলেটর, যাকাত হিসাব করার নিয়ম, zakat calculator bangladesh, zakat nisab 2026, islamic zakat calculator, shariah zakat calculator', 'zakat calculator, zakat calculator bangladesh, zakat nisab 2026, calculate zakat online, islamic financial tools');
 
+    const relatedCalculators = [
+        { name: t('স্বর্ণের দাম', 'Gold Price'), path: '/gold-price-calculator-bangladesh', icon: <Zap size={14} /> },
+        { name: t('বয়স ক্যালকুলেটর', 'Age Hub'), path: '/age-calculator-bangladesh', icon: <Settings size={14} /> },
+    ];
+
     return (
         <CalculatorLayout
             title={seoTitle}
             description={seoDescription}
             keywords={seoKeywords}
             canonical="/zakat-calculator-bangladesh"
+            relatedTools={relatedCalculators}
         >
             <div className="card-premium !p-0 overflow-hidden border-none shadow-none bg-transparent">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">

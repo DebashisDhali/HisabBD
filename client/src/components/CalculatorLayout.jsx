@@ -5,17 +5,19 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ShieldCheck, Sparkle, Target, Zap, LayoutDashboard, Settings } from 'lucide-react';
 
-const CalculatorLayout = ({ children, title, description, schema, keywords, canonical }) => {
+const CalculatorLayout = ({ children, title, description, schema, keywords, canonical, relatedTools }) => {
     const { lang, t } = useLanguage();
     const currentUrl = `https://hisabbd.com${canonical || window.location.pathname}`;
 
     // Dynamic Related Tools Logic
-    const trendingTools = [
+    const defaultTrendingTools = [
         { name: t('যাকাত ক্যালকুলেটর', 'Zakat Hub'), path: '/zakat-calculator-bangladesh', icon: <Target size={14} /> },
         { name: t('ভর্তি জিপিএ ক্যালকুলেটর', 'Admission Hub'), path: '/admission-gpa-marks-calculator', icon: <Sparkle size={14} /> },
         { name: t('স্বর্ণের দাম', 'Gold Price'), path: '/gold-price-calculator-bangladesh', icon: <Zap size={14} /> },
         { name: t('বয়স ক্যালকুলেটর', 'Age Hub'), path: '/age-calculator-bangladesh', icon: <Settings size={14} /> },
-    ].filter(tool => !currentUrl.includes(tool.path));
+    ];
+
+    const trendingTools = (relatedTools || defaultTrendingTools).filter(tool => !currentUrl.includes(tool.path));
 
     // Global Key Navigation Hook
     React.useEffect(() => {

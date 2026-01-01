@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import CalculatorLayout from '../components/CalculatorLayout';
 import { useLanguage } from '../context/LanguageContext';
 import { calculateBMI } from '../calculators/health';
-import { Activity, Scale, Info, RotateCcw, HelpCircle, CheckCircle2, AlertTriangle, Fingerprint, Ruler, Maximize } from 'lucide-react';
+import { Activity, Scale, Info, RotateCcw, HelpCircle, CheckCircle2, AlertTriangle, Fingerprint, Ruler, Maximize, Target, Zap, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const FitnessPage = ({ type }) => {
@@ -61,12 +61,19 @@ const FitnessPage = ({ type }) => {
 
     const currentSeo = seoConfigs[type] || seoConfigs.bmi;
 
+    const relatedCalculators = [
+        { name: t('বয়স ক্যালকুলেটর', 'Age Hub'), path: '/age-calculator-bangladesh', icon: <Target size={14} /> },
+        { name: t('যাকাত ক্যালকুলেটর', 'Zakat Hub'), path: '/zakat-calculator-bangladesh', icon: <Zap size={14} /> },
+        { name: t('জিপিএ ক্যালকুলেটর', 'GPA Hub'), path: '/ssc-hsc-gpa-calculator', icon: <Settings size={14} /> },
+    ];
+
     return (
         <CalculatorLayout
             title={currentSeo.title}
             description={currentSeo.desc}
             keywords={currentSeo.keywords}
             canonical={currentSeo.canonical}
+            relatedTools={relatedCalculators}
         >
             <div className="card-premium !p-0 overflow-hidden border-none shadow-none bg-transparent">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">

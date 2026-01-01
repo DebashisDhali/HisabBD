@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import CalculatorLayout from '../components/CalculatorLayout';
 import { useLanguage } from '../context/LanguageContext';
 import { calculateGoldPrice } from '../calculators/gold';
-import { Coins, AlertTriangle, HelpCircle, Weight, Scaling, Sparkles, Compass, RotateCcw, Fingerprint, Briefcase } from 'lucide-react';
+import { Coins, AlertTriangle, HelpCircle, Weight, Scaling, Sparkles, Compass, RotateCcw, Fingerprint, Briefcase, Target, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const GoldPricePage = () => {
@@ -26,12 +26,18 @@ const GoldPricePage = () => {
     const seoDescription = t('আজকের স্বর্ণের দাম অনুযায়ী আপনার সোনার বাজারমূল্য হিসেব করুন। ১৮, ২১, ২২ ও ২৪ ক্যারেট স্বর্ণের সঠিক হিসাব করার টুল। ভরি ও গ্রামের নির্ভুল মান।', 'Calculate gold price in Bangladesh based on latest market rates. Accurate weight conversion and purity pricing for 18K, 21K, 22K, and 24K gold. Best BD gold tools.');
     const seoKeywords = t('স্বর্ণের দাম ক্যালকুলেটর, সোনার দাম কত, gold price calculator bangladesh, today gold price bd, 22 karat gold price bangladesh, gold purity calculator', 'gold price calculator, gold price bangladesh, calculate gold value bd, 22k gold price, gold unit converter');
 
+    const relatedCalculators = [
+        { name: t('যাকাত ক্যালকুলেটর', 'Zakat Hub'), path: '/zakat-calculator-bangladesh', icon: <Target size={14} /> },
+        { name: t('বয়স ক্যালকুলেটর', 'Age Hub'), path: '/age-calculator-bangladesh', icon: <Settings size={14} /> },
+    ];
+
     return (
         <CalculatorLayout
             title={seoTitle}
             description={seoDescription}
             keywords={seoKeywords}
             canonical="/gold-price-calculator-bangladesh"
+            relatedTools={relatedCalculators}
         >
             <div className="card-premium !p-0 overflow-hidden border-none shadow-none bg-transparent">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">

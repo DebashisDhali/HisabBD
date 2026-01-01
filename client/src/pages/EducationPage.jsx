@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import CalculatorLayout from '../components/CalculatorLayout';
 import { useLanguage } from '../context/LanguageContext';
 import { calculateGPA, calculateCGPA, percentageToGPA, gpaToPercentage } from '../calculators/education';
-import { GraduationCap, Plus, Trash2, BookOpen, ScrollText, Percent, HelpCircle, LayoutGrid, Award, RotateCcw, Fingerprint, AlertTriangle, Edit3, Activity, Layers, ArrowRight, CheckCircle2, Target, Globe } from 'lucide-react';
+import { GraduationCap, Plus, Trash2, BookOpen, ScrollText, Percent, HelpCircle, LayoutGrid, Award, RotateCcw, Fingerprint, AlertTriangle, Edit3, Activity, Layers, ArrowRight, CheckCircle2, Target, Globe, Zap, Settings, Sparkle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const EducationPage = ({ type }) => {
@@ -112,12 +112,19 @@ const EducationPage = ({ type }) => {
 
     const currentSeo = seoConfigs[type] || seoConfigs.gpa;
 
+    const relatedCalculators = [
+        { name: t('ভর্তি জিপিএ', 'Admission GPA'), path: '/admission-gpa-marks-calculator', icon: <Target size={14} /> },
+        { name: t('আয়কর ক্যালকুলেটর', 'Salary Tax'), path: '/salary-tax-calculator-bangladesh', icon: <Zap size={14} /> },
+        { name: t('বয়স ক্যালকুলেটর', 'Age Hub'), path: '/age-calculator-bangladesh', icon: <Settings size={14} /> },
+    ];
+
     return (
         <CalculatorLayout
             title={currentSeo.title}
             description={currentSeo.desc}
             keywords={currentSeo.keywords}
             canonical={currentSeo.canonical}
+            relatedTools={relatedCalculators}
         >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-8">

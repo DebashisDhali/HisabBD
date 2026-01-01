@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import CalculatorLayout from '../components/CalculatorLayout';
 import { useLanguage } from '../context/LanguageContext';
 import { calculateAge, calculateSalaryTax } from '../calculators/utilities';
-import { Calendar, Wallet, Banknote, AlertTriangle, HelpCircle, User, Briefcase, Fingerprint, Clock, ShieldCheck, Zap, RotateCcw, ArrowRightCircle } from 'lucide-react';
+import { Calendar, Wallet, Banknote, AlertTriangle, HelpCircle, User, Briefcase, Fingerprint, Clock, ShieldCheck, Zap, RotateCcw, ArrowRightCircle, Target, Sparkle, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const UtilityPage = ({ type }) => {
@@ -48,12 +48,23 @@ const UtilityPage = ({ type }) => {
 
     const currentSeo = seoConfigs[type] || seoConfigs.age;
 
+    const relatedCalculators = type === 'age' ? [
+        { name: t('যাকাত ক্যালকুলেটর', 'Zakat Hub'), path: '/zakat-calculator-bangladesh', icon: <Target size={14} /> },
+        { name: t('স্বর্ণের দাম', 'Gold Price'), path: '/gold-price-calculator-bangladesh', icon: <Sparkle size={14} /> },
+        { name: t('জিপিএ ক্যালকুলেটর', 'GPA Hub'), path: '/ssc-hsc-gpa-calculator', icon: <Settings size={14} /> },
+    ] : [
+        { name: t('ডিপিএস প্রফিট', 'DPS Profit'), path: '/dps-profit-calculator', icon: <Target size={14} /> },
+        { name: t('এফডিআর লভ্যাংশ', 'FDR Dividends'), path: '/fdr-profit-calculator', icon: <Sparkle size={14} /> },
+        { name: t('লোন ইএমআই', 'Loan EMI'), path: '/emi-loan-calculator', icon: <Settings size={14} /> },
+    ];
+
     return (
         <CalculatorLayout
             title={currentSeo.title}
             description={currentSeo.desc}
             keywords={currentSeo.keywords}
             canonical={currentSeo.canonical}
+            relatedTools={relatedCalculators}
         >
             <div className="space-y-6">
                 {type === 'age' && (

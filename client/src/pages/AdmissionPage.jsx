@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CalculatorLayout from '../components/CalculatorLayout';
 import { useLanguage } from '../context/LanguageContext';
 import { admissionSystems, calculateAdmissionMarks } from '../calculators/admission';
-import { GraduationCap, Award, Target, AlertCircle, CheckCircle2, RotateCcw, Fingerprint, ArrowRight, ShieldAlert, Sparkles, Building2, Beaker, HardHat, School, Search } from 'lucide-react';
+import { GraduationCap, Award, Target, AlertCircle, CheckCircle2, RotateCcw, Fingerprint, ArrowRight, ShieldAlert, Sparkles, Building2, Beaker, HardHat, School, Search, Zap, Settings } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const AdmissionPage = () => {
@@ -39,12 +39,19 @@ const AdmissionPage = () => {
     const seoDescription = t('মেডিকেল ও বিশ্ববিদ্যালয়ের ভর্তি পরীক্ষার জিপিএ মার্কস হিসেব করুন। মেডিকেল, ডিইউ, জেইউ, জাস্ট ক্লাস্টার ও ইঞ্জিনিয়ারিং ভার্সিটির সঠিক হিসাব।', 'Calculate GPA merit marks for Medical, DU, JU, CU, RU, GST Cluster and Engineering admissions in Bangladesh. Most accurate and updated scoring matrix.');
     const seoKeywords = t('ভর্তি জিপিএ ক্যালকুলেটর, মেডিকেল ভর্তি জিপিএ হিসাব, ডিইউ ভর্তি জিপিএ, admission gpa calculator bd, medical admission gpa marks calculation, du gpa marks calculator', 'admission gpa calculator, medical admission gpa marks calculation, du gpa calculation, engineering admission eligibility bd');
 
+    const relatedCalculators = [
+        { name: t('জিপিএ ক্যালকুলেটর', 'GPA Hub'), path: '/ssc-hsc-gpa-calculator', icon: <Target size={14} /> },
+        { name: t('সিজিপিএ ক্যালকুলেটর', 'CGPA Hub'), path: '/university-cgpa-calculator', icon: <Zap size={14} /> },
+        { name: t('বয়স ক্যালকুলেটর', 'Age Hub'), path: '/age-calculator-bangladesh', icon: <Settings size={14} /> },
+    ];
+
     return (
         <CalculatorLayout
             title={seoTitle}
             description={seoDescription}
             keywords={seoKeywords}
             canonical="/admission-gpa-marks-calculator"
+            relatedTools={relatedCalculators}
         >
             <div className="card-premium !p-0 overflow-hidden border-none shadow-none bg-transparent">
                 <div className="input-zone-container !p-6 md:!p-10 mb-8">
