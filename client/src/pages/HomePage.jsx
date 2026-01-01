@@ -24,12 +24,14 @@ import {
     RotateCcw,
     Fingerprint,
     Target,
-    Activity
+    Activity,
+    CheckCircle2
 } from 'lucide-react';
 
 const HomePage = () => {
     const { lang, t } = useLanguage();
-    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const categories = [
         {
@@ -96,10 +98,15 @@ const HomePage = () => {
         }
     ];
 
-    const allCalculators = categories.flatMap(cat => cat.items.map(item => ({ ...item, catColor: cat.color, catLight: cat.lightColor })));
-    const filteredCalculators = allCalculators.filter(calc =>
-        calc.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const allCalculators = categories.flatMap(cat => cat.items.map(item => ({ ...item, catColor: cat.color, catLight: cat.lightColor, categoryId: cat.id })));
+    const filteredCalculators = selectedCategory
+        ? allCalculators.filter(calc => calc.categoryId === selectedCategory)
+        : [];
+
+    const handleCategorySelect = (id) => {
+        setSelectedCategory(id === selectedCategory ? null : id);
+        setIsDropdownOpen(false);
+    };
 
     return (
         <div className="relative min-h-screen bg-[#fafbfc]">
@@ -115,14 +122,14 @@ const HomePage = () => {
                 <div className="absolute bottom-[-10%] right-[-5%] w-[60rem] h-[60rem] bg-blue-500/5 blur-[120px] rounded-full"></div>
             </div>
 
-            {/* SEARCH SPOTLIGHT BACKDROP */}
+            {/* SEARCH/FILTER BACKDROP */}
             <AnimatePresence>
-                {searchQuery && (
+                {(isDropdownOpen || selectedCategory) && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={() => setSearchQuery('')}
+                        onClick={() => { setIsDropdownOpen(false); setSelectedCategory(null); }}
                         className="fixed inset-0 bg-slate-950/20 backdrop-blur-[2px] z-40 transition-all cursor-pointer"
                     />
                 )}
@@ -153,50 +160,86 @@ const HomePage = () => {
                                 </p>
                             </motion.div>
 
-                            {/* INTEGRATED SEARCH HUB */}
+                            {/* INTEGRATED DROPDOWN FILTER HUB */}
                             <div className="relative group z-50">
-                                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors pointer-events-none">
-                                    <Search size={20} strokeWidth={2.5} />
-                                </div>
-                                <input
-                                    type="text"
-                                    placeholder={t('যে কোনো কিছু খুঁজুন...', 'Instant Discovery...')}
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full h-16 pl-16 pr-32 bg-white border-2 border-slate-100 rounded-2xl shadow-xl shadow-slate-200/40 outline-none focus:border-emerald-500 focus:ring-8 focus:ring-emerald-500/5 transition-all font-black text-slate-800 placeholder:text-slate-300"
-                                />
-                                <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                                    {searchQuery && (
-                                        <button onClick={() => setSearchQuery('')} className="p-2 bg-slate-50 rounded-lg text-slate-400 hover:text-red-500 transition-all"><RotateCcw size={14} /></button>
-                                    )}
-                                    <div className={`px-3 py-1.5 rounded-lg text-[8px] font-black uppercase tracking-widest border ${searchQuery ? 'bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-slate-50 border-slate-100 text-slate-400'}`}>
-                                        {searchQuery ? `${filteredCalculators.length} Match` : 'Search'}
+                                {/* The Main Dropdown Button */}
+                                <button
+                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                    className={`w-full h-16 px-6 bg-white border-2 rounded-2xl shadow-xl shadow-slate-200/40 flex items-center justify-between transition-all outline-none ${isDropdownOpen || selectedCategory
+                                        ? 'border-emerald-500 ring-4 ring-emerald-500/5'
+                                        : 'border-slate-100 hover:border-slate-200'
+                                        }`}
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className={`p-2 rounded-lg ${selectedCategory ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-50 text-slate-400'}`}>
+                                            <Search size={20} strokeWidth={2.5} />
+                                        </div>
+                                        <span className={`text-base font-black tracking-tight ${selectedCategory ? 'text-slate-900' : 'text-slate-400'}`}>
+                                            {selectedCategory
+                                                ? categories.find(c => c.id === selectedCategory)?.title
+                                                : t('ক্যালকুলেটর খুঁজুন...', 'Select Calculator Category...')}
+                                        </span>
                                     </div>
-                                </div>
+                                    <div className={`p-2 rounded-full bg-slate-50 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 bg-emerald-50 text-emerald-600' : 'text-slate-400'}`}>
+                                        <ArrowRight size={16} className="rotate-90" />
+                                    </div>
+                                </button>
 
+                                {/* Dropdown Menu Options */}
                                 <AnimatePresence>
-                                    {searchQuery && (
+                                    {isDropdownOpen && (
                                         <motion.div
                                             initial={{ opacity: 0, y: 10, scale: 0.95 }}
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
                                             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                                            className="absolute top-[110%] left-0 w-full bg-white/95 backdrop-blur-2xl border border-slate-100 rounded-2xl shadow-2xl p-4 overflow-hidden z-50 transition-all"
+                                            className="absolute top-[110%] left-0 w-full bg-white/95 backdrop-blur-2xl border border-slate-100 rounded-2xl shadow-2xl p-2 overflow-hidden z-50"
                                         >
-                                            <div className="max-h-[350px] overflow-y-auto custom-scrollbar space-y-1">
-                                                <div className="px-4 py-2 border-b border-slate-50 mb-2">
-                                                    <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">SYSTEM OVERVIEW</span>
-                                                </div>
-                                                {filteredCalculators.length > 0 ? (
-                                                    filteredCalculators.map((item) => (
-                                                        <Link key={item.id} to={item.path} className="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 transition-all group/item">
-                                                            <div className={`w-10 h-10 ${item.catLight} rounded-xl flex items-center justify-center`}>{React.cloneElement(item.icon, { size: 18, className: "text-slate-900" })}</div>
-                                                            <div className="flex-grow"><h4 className="text-xs font-black text-slate-900 group-hover/item:text-emerald-600 transition-colors uppercase tracking-tight">{item.name}</h4></div>
-                                                            <ArrowRight size={12} className="text-slate-200 group-hover/item:text-emerald-500 transition-all" />
-                                                        </Link>
-                                                    ))
-                                                ) : (
-                                                    <div className="py-10 text-center"><p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">No match found</p></div>
-                                                )}
+                                            <div className="max-h-[300px] overflow-y-auto custom-scrollbar p-2 space-y-2">
+                                                {categories.map((cat) => (
+                                                    <button
+                                                        key={cat.id}
+                                                        onClick={() => handleCategorySelect(cat.id)}
+                                                        className={`w-full flex items-center gap-4 p-3 rounded-xl transition-all group/item ${selectedCategory === cat.id ? 'bg-emerald-50 border border-emerald-100' : 'hover:bg-slate-50 border border-transparent'}`}
+                                                    >
+                                                        <div className={`w-10 h-10 ${cat.lightColor} rounded-xl flex items-center justify-center`}>
+                                                            {/* We don't have cat icon here, used generic dot or nothing. Let's use a colored bar */}
+                                                            <div className={`w-3 h-3 rounded-full ${cat.color}`}></div>
+                                                        </div>
+                                                        <div className="flex-grow text-left">
+                                                            <h4 className={`text-sm font-black uppercase tracking-tight ${selectedCategory === cat.id ? 'text-emerald-700' : 'text-slate-900'}`}>{cat.title}</h4>
+                                                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest truncate">{cat.items.length} Calculators</p>
+                                                        </div>
+                                                        {selectedCategory === cat.id && <CheckCircle2 size={16} className="text-emerald-500" />}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+
+                                {/* Filtered Results List (Similar to old search results) */}
+                                <AnimatePresence>
+                                    {!isDropdownOpen && selectedCategory && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: 10 }}
+                                            className="absolute top-[110%] left-0 w-full bg-white/95 backdrop-blur-2xl border border-emerald-100 rounded-2xl shadow-2xl p-4 overflow-hidden z-40"
+                                        >
+                                            <div className="flex justify-between items-center px-2 py-2 border-b border-slate-50 mb-2">
+                                                <span className="text-[8px] font-black text-emerald-500 uppercase tracking-widest">
+                                                    {categories.find(c => c.id === selectedCategory)?.title} TOOLS
+                                                </span>
+                                                <button onClick={() => setSelectedCategory(null)} className="text-[9px] font-bold text-red-400 hover:text-red-500 uppercase tracking-widest">Clear</button>
+                                            </div>
+                                            <div className="max-h-[350px] overflow-y-auto custom-scrollbar space-y-2">
+                                                {filteredCalculators.map((item) => (
+                                                    <Link key={item.id} to={item.path} className="flex items-center gap-4 p-3 rounded-xl hover:bg-emerald-50/50 transition-all group/item border border-transparent hover:border-emerald-100">
+                                                        <div className={`w-10 h-10 ${item.catLight} rounded-xl flex items-center justify-center`}>{React.cloneElement(item.icon, { size: 18, className: "text-slate-900" })}</div>
+                                                        <div className="flex-grow"><h4 className="text-xs font-black text-slate-900 group-hover/item:text-emerald-600 transition-colors uppercase tracking-tight">{item.name}</h4></div>
+                                                        <ArrowRight size={12} className="text-slate-200 group-hover/item:text-emerald-500 transition-all" />
+                                                    </Link>
+                                                ))}
                                             </div>
                                         </motion.div>
                                     )}
