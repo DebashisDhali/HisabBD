@@ -73,8 +73,8 @@ const AdmissionPage = () => {
                                                     key={key}
                                                     onClick={() => setSelectedSystem(key)}
                                                     className={`p-4 rounded-2xl border-2 transition-all text-left flex flex-col gap-2 relative overflow-hidden group ${selectedSystem === key
-                                                            ? `border-${groups[groupName].color}-500 bg-${groups[groupName].color}-50 shadow-lg`
-                                                            : 'border-slate-100 bg-white hover:border-slate-200'
+                                                        ? `border-${groups[groupName].color}-500 bg-${groups[groupName].color}-50 shadow-lg`
+                                                        : 'border-slate-100 bg-white hover:border-slate-200'
                                                         }`}
                                                 >
                                                     <div className="flex items-center justify-between">
@@ -128,8 +128,8 @@ const AdmissionPage = () => {
                             <button
                                 onClick={() => setOptions(prev => ({ ...prev, isSecondTimer: !prev.isSecondTimer }))}
                                 className={`flex items-center gap-3 px-6 py-3 rounded-xl border font-bold text-xs uppercase tracking-widest transition-all ${options.isSecondTimer
-                                        ? 'bg-amber-500 border-amber-500 text-white shadow-lg'
-                                        : 'bg-white border-slate-100 text-slate-500 hover:border-amber-200'
+                                    ? 'bg-amber-500 border-amber-500 text-white shadow-lg'
+                                    : 'bg-white border-slate-100 text-slate-500 hover:border-amber-200'
                                     }`}
                             >
                                 <RotateCcw size={16} />
@@ -139,8 +139,8 @@ const AdmissionPage = () => {
                                 <button
                                     onClick={() => setOptions(prev => ({ ...prev, isPrevAdmitted: !prev.isPrevAdmitted }))}
                                     className={`flex items-center gap-3 px-6 py-3 rounded-xl border font-bold text-xs uppercase tracking-widest transition-all ${options.isPrevAdmitted
-                                            ? 'bg-red-500 border-red-500 text-white shadow-lg'
-                                            : 'bg-white border-slate-100 text-slate-500 hover:border-red-200'
+                                        ? 'bg-red-500 border-red-500 text-white shadow-lg'
+                                        : 'bg-white border-slate-100 text-slate-500 hover:border-red-200'
                                         }`}
                                 >
                                     <ShieldAlert size={16} />
@@ -181,7 +181,7 @@ const AdmissionPage = () => {
                                     <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.5em] mb-4 opacity-70">{t('আপনার অর্জিত জিপিএ মার্কস', 'GPA MERIT CONTRIBUTION')}</div>
                                     <div className="flex items-center justify-center gap-4">
                                         <Sparkles size={32} className="text-amber-400 text-glow-amber-400" />
-                                        <div className="text-7xl md:text-9xl font-black tracking-tighter result-text-neon-blue truncate">
+                                        <div className="text-7xl md:text-9xl font-black tracking-tighter result-text-neon-blue truncate" style={{ fontSize: 'clamp(4rem, 15vw, 9rem)', lineHeight: '1' }}>
                                             {result.finalGpaScore}
                                         </div>
                                     </div>
